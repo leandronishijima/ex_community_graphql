@@ -3,6 +3,7 @@ defmodule ExCommunityGraphqlWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug CORSPlug, origin: "*"
   end
 
   scope "/" do
@@ -12,6 +13,8 @@ defmodule ExCommunityGraphqlWeb.Router do
       schema: ExCommunityGraphqlWeb.Schema,
       interface: :simple,
       conext: %{pubsub: ExCommunityGraphqlWeb.Endpoint}
+
+    forward "/", Absinthe.Plug, schema: ExCommunityGraphqlWeb.Schema
   end
 
   # Enables LiveDashboard only for development
